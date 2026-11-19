@@ -1,0 +1,27 @@
+{
+  "name": "bca-travel",
+  "version": "0.1.0-pilot",
+  "private": true,
+  "type": "module",
+  "description": "BCA Travel — pilot website. Booking requests are sent by email.",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "tailwindcss": "^4.1.0",
+    "vite": "^7.1.0",
+    "wrangler": "^4.0.0"
+  }
+}

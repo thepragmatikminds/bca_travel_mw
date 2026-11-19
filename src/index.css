@@ -1,0 +1,169 @@
+@import "tailwindcss";
+
+/* Brand palette sampled from the BCA Travel poster: vivid green, near-black panel, yellow accent, Malawi flag red. */
+@theme static {
+  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-brand-50: #ecfaf1;
+  --color-brand-100: #d2f3de;
+  --color-brand-200: #a6e6be;
+  --color-brand-300: #6fd498;
+  --color-brand-400: #34bd6f;
+  --color-brand-500: #0fa44f;
+  --color-brand-600: #0a8240;
+  --color-brand-700: #0b6b36;
+  --color-brand-800: #0a5530;
+  --color-brand-900: #073d22;
+
+  --color-sun-300: #fbea6a;
+  --color-sun-400: #f7df3a;
+  --color-sun-500: #f2d40f;
+
+  --color-ink-950: #0b100c;
+  --color-ink-900: #111611;
+  --color-ink-800: #182019;
+  --color-ink-700: #2a342b;
+  --color-ink-600: #435045;
+  --color-ink-500: #5f6c61;
+
+  --color-flag: #ce1126;
+  --color-paper: #f6f9f4;
+  --color-line: #dce6dd;
+
+  --shadow-soft: 0 18px 50px -28px rgb(7 61 34 / 0.45);
+  --shadow-lift: 0 26px 60px -30px rgb(7 61 34 / 0.6);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink-900);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.015em;
+  }
+  ::selection {
+    background: var(--color-sun-400);
+    color: var(--color-ink-900);
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-brand-500);
+    outline-offset: 2px;
+  }
+  .on-dark :focus-visible {
+    outline-color: var(--color-sun-400);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; animation: none !important; }
+  }
+}
+
+@utility container-page {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 72rem;
+  padding-inline: 1.25rem;
+  @media (min-width: 40rem) {
+    padding-inline: 2rem;
+  }
+}
+
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    padding: 0.8rem 1.45rem;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    line-height: 1.2;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: background-color 0.15s, color 0.15s, border-color 0.15s, transform 0.15s;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--color-brand-600); color: #fff; }
+  .btn-primary:hover { background: var(--color-brand-700); }
+  .btn-sun { background: var(--color-sun-400); color: var(--color-ink-900); }
+  .btn-sun:hover { background: var(--color-sun-300); }
+  .btn-outline { border-color: var(--color-line); background: #fff; color: var(--color-ink-900); }
+  .btn-outline:hover { border-color: var(--color-brand-500); color: var(--color-brand-700); }
+  .btn-ghost-light { border-color: rgb(255 255 255 / 0.35); color: #fff; }
+  .btn-ghost-light:hover { background: rgb(255 255 255 / 0.1); }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-brand-600);
+  }
+
+  .card {
+    border: 1.5px solid var(--color-line);
+    border-radius: 1.5rem;
+    background: #fff;
+  }
+
+  .field-label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-ink-700);
+  }
+  .field {
+    width: 100%;
+    border-radius: 0.9rem;
+    border: 1.5px solid var(--color-line);
+    background: #fff;
+    padding: 0.75rem 0.9rem;
+    font-size: 1rem; /* 16px stops iOS zooming into the field */
+    color: var(--color-ink-900);
+  }
+  .field::placeholder { color: #8a968c; }
+  .field:focus {
+    outline: none;
+    border-color: var(--color-brand-500);
+    box-shadow: 0 0 0 4px rgb(15 164 79 / 0.18);
+  }
+  .field[aria-invalid="true"] { border-color: var(--color-flag); }
+
+  .flag-stripe {
+    height: 6px;
+    background: linear-gradient(
+      to bottom,
+      var(--color-ink-950) 0 33.34%,
+      var(--color-flag) 33.34% 66.67%,
+      var(--color-brand-500) 66.67% 100%
+    );
+  }
+
+  .hero-bg {
+    background:
+      radial-gradient(60rem 30rem at 88% -10%, rgb(15 164 79 / 0.55), transparent 60%),
+      radial-gradient(40rem 24rem at -10% 110%, rgb(242 212 15 / 0.16), transparent 60%),
+      linear-gradient(160deg, var(--color-brand-900) 0%, var(--color-ink-900) 100%);
+  }
+
+  /* The poster's "Our Services" panel: near-black, green outline, yellow headline. */
+  .panel-dark {
+    border: 2px solid var(--color-brand-500);
+    border-radius: 1.75rem;
+    background: var(--color-ink-900);
+    color: #fff;
+  }
+}
