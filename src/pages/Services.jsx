@@ -1,71 +1,86 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "@/lib/router";
 import ContactBand from "@/components/ContactBand";
+import PageHeader from "@/components/PageHeader";
+import Photo from "@/components/Photo";
+import Reveal from "@/components/Reveal";
+import { ServiceScene } from "@/components/Scenes";
 import { ArrowRightIcon, CheckIcon, SERVICE_ICONS } from "@/components/Icons";
 import { SERVICES } from "@/config/site";
+import { srcsFor } from "@/lib/photos";
 import { useDocumentTitle } from "@/lib/useDocumentTitle";
+import { cn } from "@/lib/utils";
 
 export default function Services() {
   useDocumentTitle("Services");
   const { hash } = useLocation();
 
   useEffect(() => {
-    if (!hash) return;
+    if (!hash) return undefined;
     const t = setTimeout(() => document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView(), 80);
     return () => clearTimeout(t);
   }, [hash]);
 
   return (
     <>
-      <div className="container-page pb-4 pt-12 sm:pt-16">
-        <p className="eyebrow">Our services</p>
-        <h1 className="mt-2 max-w-2xl text-4xl font-extrabold sm:text-5xl">Travel made as easy as ABC</h1>
-        <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-ink-600 sm:text-base">
-          Six services, one team. Choose what you need and send us a request — we confirm the details and price by email.
-        </p>
+      <PageHeader eyebrow="Our services" title="Travel made as easy as ABC">
+        Six services, one team. Choose what you need and send us a request — we confirm the details and price by email.
+      </PageHeader>
 
-        <div className="mt-10 space-y-5">
-          {SERVICES.map((s) => {
-            const Icon = SERVICE_ICONS[s.icon];
-            return (
-              <article key={s.id} id={s.id} className="card scroll-mt-28 grid gap-6 p-6 sm:p-8 lg:grid-cols-[1.1fr_1fr_1fr]">
-                <div>
-                  <span className="grid h-12 w-12 place-items-center rounded-2xl bg-brand-600 text-sun-400">
-                    <Icon size={24} />
+      <div className="container-page mt-10 space-y-6">
+        {SERVICES.map((s, i) => {
+          const Icon = SERVICE_ICONS[s.icon];
+          return (
+            <Reveal key={s.id}>
+              <article id={s.id} className="card scroll-mt-28 grid overflow-hidden md:grid-cols-[0.9fr_1.1fr]">
+                <div className={cn("relative min-h-[14rem] md:min-h-full", i % 2 && "md:order-2")}>
+                  <div className="absolute inset-0">
+                    <Photo
+                      srcs={srcsFor(s.image)}
+                      className="h-full w-full object-cover"
+                      fallback={<ServiceScene id={s.id} className="h-full w-full" />}
+                    />
+                  </div>
+                  <span className="absolute left-5 top-5 grid h-11 w-11 place-items-center rounded-full bg-white/95 text-brand-700 shadow-soft">
+                    <Icon size={20} />
                   </span>
-                  <h2 className="mt-4 text-2xl font-extrabold">{s.title}</h2>
-                  <p className="mt-2 text-[15px] leading-relaxed text-ink-600">{s.description}</p>
-                  <Link to={`/book?service=${s.id}`} className="btn btn-primary mt-5">
+                </div>
+                <div className="p-6 sm:p-8">
+                  <h2 className="text-[30px] leading-tight sm:text-4xl">{s.title}</h2>
+                  <p className="mt-3 max-w-md text-[15.5px] leading-relaxed text-ink-600">{s.description}</p>
+                  <div className="mt-6 grid gap-6 sm:grid-cols-2">
+                    <div>
+                      <h3 className="eyebrow !font-bold">What you can request</h3>
+                      <ul className="mt-3 space-y-2.5">
+                        {s.includes.map((item) => (
+                          <li key={item} className="flex gap-2.5 text-[14.5px]">
+                            <CheckIcon size={17} className="mt-0.5 shrink-0 text-brand-600" /> {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <h3 className="eyebrow !font-bold">What we will need</h3>
+                      <ul className="mt-3 space-y-2.5">
+                        {s.needs.map((item) => (
+                          <li key={item} className="flex gap-2.5 text-[14.5px] text-ink-600">
+                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-sun-500" /> {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  <Link to={`/book?service=${s.id}`} className="btn btn-primary mt-7">
                     Request {s.title.toLowerCase()} <ArrowRightIcon size={16} />
                   </Link>
                 </div>
-                <div>
-                  <h3 className="text-xs font-extrabold uppercase tracking-[0.16em] text-brand-600">What you can request</h3>
-                  <ul className="mt-3 space-y-2.5">
-                    {s.includes.map((item) => (
-                      <li key={item} className="flex gap-2.5 text-[15px]">
-                        <CheckIcon size={18} className="mt-0.5 shrink-0 text-brand-600" /> {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="text-xs font-extrabold uppercase tracking-[0.16em] text-brand-600">What we will need</h3>
-                  <ul className="mt-3 space-y-2.5">
-                    {s.needs.map((item) => (
-                      <li key={item} className="flex gap-2.5 text-[15px] text-ink-600">
-                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-sun-500" /> {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
               </article>
-            );
-          })}
-        </div>
+            </Reveal>
+          );
+        })}
       </div>
 
-      <div className="pt-16">
+      <div className="pt-20">
         <ContactBand />
       </div>
     </>

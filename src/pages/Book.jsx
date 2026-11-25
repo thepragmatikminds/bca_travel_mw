@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "@/lib/router";
+import PageHeader from "@/components/PageHeader";
 import {
   ArrowRightIcon,
   CheckIcon,
@@ -86,15 +87,15 @@ function Review({ request, onEdit }) {
   return (
     <div className="card p-6 sm:p-8">
       <p className="eyebrow">Step 2 of 2</p>
-      <h2 className="mt-2 text-3xl font-extrabold">Send your request by email</h2>
+      <h2 className="mt-2 text-3xl sm:text-4xl">Send your request by email</h2>
       <p className="mt-3 text-[15px] leading-relaxed text-ink-600">
         Your request is ready, but <strong className="text-ink-900">nothing has been sent yet</strong>. Choose an option
         below, then press send in your email. Our team replies to confirm availability, the price and how to pay.
       </p>
 
-      <div className="mt-6 rounded-2xl border-2 border-line bg-brand-50/50 p-5">
+      <div className="mt-6 rounded-2xl border border-line bg-[linear-gradient(135deg,#f3faf4,#f6f9e6)] p-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h3 className="text-lg font-bold">{request.service.title}</h3>
+          <h3 className="text-xl">{request.service.title}</h3>
           <span className="rounded-full bg-ink-900 px-3 py-1 text-xs font-bold tracking-wider text-sun-400">
             {request.reference}
           </span>
@@ -132,7 +133,7 @@ function Review({ request, onEdit }) {
           : `No email app on this device? Use Gmail, or copy the request and email it to ${SITE.email}.`}
       </p>
 
-      <div className="mt-6 flex gap-3 rounded-2xl bg-sun-400/25 p-4 text-[14px] leading-relaxed">
+      <div className="mt-6 flex gap-3 rounded-2xl bg-[linear-gradient(100deg,rgb(247_223_58/0.3),rgb(143_220_74/0.16))] p-4 text-[14px] leading-relaxed">
         <InfoIcon size={20} className="mt-0.5 shrink-0 text-brand-800" />
         <p>
           <strong>Payment:</strong> there is no online payment yet. We will tell you how to pay in our email reply, once
@@ -198,21 +199,33 @@ export default function Book() {
   };
 
   return (
-    <div className="container-page pb-4 pt-10 sm:pt-14">
-      <p className="eyebrow">Request a booking</p>
-      <h1 className="mt-2 text-4xl font-extrabold sm:text-5xl">Tell us about your trip</h1>
-      <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-ink-600">
+    <>
+      <PageHeader eyebrow="Request a booking" title="Tell us about your trip">
         Fill in the details and we prepare an email to our team. We reply with availability, the price and how to pay.
-      </p>
+      </PageHeader>
+      <ol className="container-page mt-6 flex flex-wrap gap-x-6 gap-y-2 text-[11px] font-bold uppercase tracking-[0.16em]" aria-label="Progress">
+        {["Your details", "Send the email", "We confirm"].map((label, i) => {
+          const current = (request ? 1 : 0) === i;
+          const past = (request ? 1 : 0) > i;
+          return (
+            <li key={label} className={cn("flex items-center gap-2", current ? "text-brand-700" : past ? "text-ink-700" : "text-ink-400")}>
+              <span className={cn("grid h-6 w-6 place-items-center rounded-full text-[11px]", current ? "grad-brand text-white" : past ? "bg-brand-100 text-brand-700" : "bg-tint")}>
+                {past ? "✓" : i + 1}
+              </span>
+              {label}
+            </li>
+          );
+        })}
+      </ol>
 
-      <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_20rem] lg:items-start">
+      <div className="container-page mt-8 grid gap-8 pb-4 lg:grid-cols-[1fr_20rem] lg:items-start">
         <div>
           {request ? (
             <Review request={request} onEdit={() => setRequest(null)} />
           ) : (
             <form onSubmit={onSubmit} noValidate className="space-y-8">
               <fieldset>
-                <legend className="field-label !mb-3 !text-sm">1. What do you need?</legend>
+                <legend className="field-label !mb-3">1 · What do you need?</legend>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                   {SERVICES.map((s) => {
                     const Icon = SERVICE_ICONS[s.icon];
@@ -226,11 +239,11 @@ export default function Book() {
                           onChange={() => chooseService(s.id)}
                           className="peer sr-only"
                         />
-                        <span className="flex h-full flex-col items-start gap-2.5 rounded-2xl border-2 border-line bg-white p-4 text-sm font-bold transition-colors hover:border-brand-300 peer-checked:border-brand-600 peer-checked:bg-brand-50 peer-focus-visible:outline-3 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brand-500">
+                        <span className="flex h-full flex-col items-start gap-2.5 rounded-2xl border-[1.5px] border-line bg-white p-4 text-sm font-bold transition-colors hover:border-brand-300 peer-checked:border-brand-500 peer-checked:bg-[linear-gradient(135deg,#eef9f1,#f4f9dc)] peer-checked:shadow-soft peer-focus-visible:outline-3 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brand-500">
                           <span
                             className={cn(
                               "grid h-9 w-9 place-items-center rounded-xl",
-                              s.id === serviceId ? "bg-brand-600 text-sun-400" : "bg-brand-50 text-brand-700"
+                              s.id === serviceId ? "grad-brand text-white" : "bg-brand-50 text-brand-700"
                             )}
                           >
                             <Icon size={18} />
@@ -244,7 +257,7 @@ export default function Book() {
               </fieldset>
 
               <fieldset className="card p-6 sm:p-7">
-                <legend className="px-2 font-display text-lg font-bold">2. {service.title}: trip details</legend>
+                <legend className="px-2 font-display text-xl font-medium">2 · {service.title}: trip details</legend>
                 <div className="mt-2 grid gap-5 sm:grid-cols-2">
                   {service.fields
                     .filter((f) => isVisible(f, values))
@@ -268,7 +281,7 @@ export default function Book() {
               </fieldset>
 
               <fieldset className="card p-6 sm:p-7">
-                <legend className="px-2 font-display text-lg font-bold">3. Your details</legend>
+                <legend className="px-2 font-display text-xl font-medium">3 · Your details</legend>
                 <div className="mt-2 grid gap-5 sm:grid-cols-2">
                   <Field id="contact-fullName" label="Full name *" error={errors.fullName} wide>
                     <input
@@ -337,7 +350,7 @@ export default function Book() {
 
         <aside className="space-y-5 lg:sticky lg:top-28">
           <div className="panel-dark on-dark p-6">
-            <h2 className="text-xl font-extrabold text-sun-400">How booking works</h2>
+            <h2 className="text-2xl text-white">How booking works</h2>
             <ol className="mt-4 space-y-3 text-[14px] leading-relaxed text-white/80">
               <li><strong className="text-white">1.</strong> Fill in the form and prepare the email.</li>
               <li><strong className="text-white">2.</strong> Send it to {SITE.email}.</li>
@@ -345,7 +358,7 @@ export default function Book() {
             </ol>
           </div>
           <div className="card p-6">
-            <h2 className="text-lg font-bold">Prefer to talk?</h2>
+            <h2 className="text-xl">Prefer to talk?</h2>
             <ul className="mt-3 space-y-2.5">
               {SITE.phones.map((p) => (
                 <li key={p.tel}>
@@ -366,6 +379,6 @@ export default function Book() {
           </div>
         </aside>
       </div>
-    </div>
+    </>
   );
 }

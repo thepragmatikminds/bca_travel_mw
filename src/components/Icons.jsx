@@ -117,6 +117,47 @@ export const InstagramIcon = make(
   </>
 );
 
+export const ShareIcon = make(
+  <>
+    <path d="M12 3v12" />
+    <path d="m7 8 5-5 5 5" />
+    <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" />
+  </>
+);
+export const PlusSquareIcon = make(
+  <>
+    <rect width="18" height="18" x="3" y="3" rx="3" />
+    <path d="M12 8v8" />
+    <path d="M8 12h8" />
+  </>
+);
+export const StarIcon = make(<path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z" />);
+export const MailCheckIcon = make(
+  <>
+    <rect width="20" height="14" x="2" y="5" rx="2" />
+    <path d="m2 7 10 7 10-7" />
+  </>
+);
+
+export const ArrowUpRightIcon = make(
+  <>
+    <path d="M7 17 17 7" />
+    <path d="M7 7h10v10" />
+  </>
+);
+export const CalendarIcon = make(
+  <>
+    <rect width="18" height="18" x="3" y="4" rx="3" />
+    <path d="M16 2v4M8 2v4M3 10h18" />
+  </>
+);
+export const MapPinIcon = make(
+  <>
+    <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z" />
+    <circle cx="12" cy="10" r="3" />
+  </>
+);
+
 export const SERVICE_ICONS = {
   plane: PlaneIcon,
   shield: ShieldIcon,
@@ -124,4 +165,5 @@ export const SERVICE_ICONS = {
   compass: CompassIcon,
   car: CarIcon,
   visa: VisaIcon,
+  mail: MailIcon,
 };

@@ -1,6 +1,8 @@
 import PilotBanner from "@/components/PilotBanner";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import MobileActionBar from "@/components/MobileActionBar";
+import InstallPrompt from "@/components/InstallPrompt";
 
 export default function SiteLayout({ children }) {
   return (
@@ -17,6 +19,8 @@ export default function SiteLayout({ children }) {
         {children}
       </main>
       <SiteFooter />
+      <MobileActionBar />
+      <InstallPrompt />
     </div>
   );
 }

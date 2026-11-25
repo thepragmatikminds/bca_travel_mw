@@ -5,37 +5,39 @@ import { CloseIcon, MenuIcon } from "@/components/Icons";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { label: "Home", to: "/" },
+  { label: "Book a service", to: "/book" },
   { label: "Services", to: "/services" },
-  { label: "Book", to: "/book" },
+  { label: "Destinations", to: "/#destinations" },
   { label: "Contact", to: "/contact" },
 ];
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
+  useEffect(() => setOpen(false), [pathname, hash]);
 
-  useEffect(() => setOpen(false), [pathname]);
-
-  const linkClass = (active) =>
-    cn(
-      "rounded-full px-4 py-2 text-sm font-semibold transition-colors",
-      active ? "bg-brand-50 text-brand-700" : "text-ink-600 hover:bg-brand-50 hover:text-brand-700"
-    );
+  const desktopLink = (active) =>
+    cn("rounded-full px-4 py-2 text-sm font-semibold transition-colors", active ? "bg-brand-50 text-brand-700" : "text-ink-600 hover:text-ink-900");
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-white/90 backdrop-blur-xl">
-      <div className="container-page flex h-[68px] items-center justify-between gap-4">
+    <header className="sticky top-0 z-40 border-b border-line/80 bg-paper/85 backdrop-blur-xl">
+      <div className="container-page flex h-[66px] items-center justify-between gap-4">
         <Link to="/" aria-label="BCA Travel home">
           <Logo />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
-          {NAV.map((item) => (
-            <NavLink key={item.to} to={item.to} className={linkClass}>
-              {item.label}
-            </NavLink>
-          ))}
+          {NAV.map((item) =>
+            item.to.includes("#") ? (
+              <Link key={item.to} to={item.to} className={desktopLink(false)}>
+                {item.label}
+              </Link>
+            ) : (
+              <NavLink key={item.to} to={item.to} className={desktopLink}>
+                {item.label}
+              </NavLink>
+            )
+          )}
         </nav>
 
         <div className="hidden md:block">
@@ -50,26 +52,20 @@ export default function SiteHeader() {
           aria-expanded={open}
           aria-controls="mobile-nav"
           onClick={() => setOpen((v) => !v)}
-          className="grid h-11 w-11 place-items-center rounded-full border-2 border-line md:hidden"
+          className="grid h-11 w-11 place-items-center rounded-full border border-line bg-white md:hidden"
         >
           {open ? <CloseIcon size={18} /> : <MenuIcon size={18} />}
         </button>
       </div>
 
-      <div id="mobile-nav" className={cn("border-t border-line bg-white md:hidden", open ? "block" : "hidden")}>
-        <nav className="container-page flex flex-col gap-1 py-3" aria-label="Mobile">
+      <div id="mobile-nav" className={cn("border-t border-line bg-paper md:hidden", open ? "block" : "hidden")}>
+        <nav className="container-page flex flex-col py-2" aria-label="Mobile">
           {NAV.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={(active) =>
-                cn("rounded-xl px-3 py-3 text-[15px] font-semibold", active ? "bg-brand-50 text-brand-700" : "hover:bg-brand-50")
-              }
-            >
+            <Link key={item.to} to={item.to} className="border-b border-line/70 py-4 text-[17px] font-medium last:border-0">
               {item.label}
-            </NavLink>
+            </Link>
           ))}
-          <Link to="/book" className="btn btn-primary mt-2">
+          <Link to="/book" className="btn btn-primary my-4">
             Request a booking
           </Link>
         </nav>

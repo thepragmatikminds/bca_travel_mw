@@ -1,5 +1,5 @@
 {
-  "name": "BCA Travel — Where travel feels as easy as ABC",
+  "name": "BCA Travel \u2014 Where travel feels as easy as ABC",
   "short_name": "BCA Travel",
   "description": "Air tickets, travel insurance, hotel booking, tour packages, airport transfers and visa processing. Request your booking by email.",
   "start_url": "/",
@@ -9,8 +9,53 @@
   "background_color": "#F6F9F4",
   "theme_color": "#0A8240",
   "icons": [
-    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "id": "/",
+  "lang": "en",
+  "categories": [
+    "travel",
+    "lifestyle"
+  ],
+  "shortcuts": [
+    {
+      "name": "Request a booking",
+      "short_name": "Book",
+      "url": "/book",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Our services",
+      "short_name": "Services",
+      "url": "/services",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
   ]
 }

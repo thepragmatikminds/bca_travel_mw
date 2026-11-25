@@ -1,3 +1,5 @@
+import { pexels, PHOTO_SIZES } from "@/lib/photos";
+
 // Single source of truth for everything the business may want to change.
 // Contact details are taken from the BCA Travel poster.
 
@@ -31,6 +33,9 @@ const range = (from, to) => Array.from({ length: to - from + 1 }, (_, i) => Stri
 export const SERVICES = [
   {
     id: "air-ticket",
+    image: pexels(1815396, ...PHOTO_SIZES.service),
+    shortTitle: "Flights",
+    quick: { placeField: "to", placeLabel: "Where to?", placePlaceholder: "e.g. Johannesburg", dateField: "departDate", dateLabel: "Departure date" },
     title: "Air tickets",
     icon: "plane",
     short: "Domestic, regional and international flights, booked for you.",
@@ -53,6 +58,9 @@ export const SERVICES = [
   },
   {
     id: "travel-insurance",
+    image: pexels(1476356, ...PHOTO_SIZES.service),
+    shortTitle: "Insurance",
+    quick: { placeField: "destination", placeLabel: "Travelling to", placePlaceholder: "e.g. Dubai", dateField: "startDate", dateLabel: "Cover starts" },
     title: "Travel insurance",
     icon: "shield",
     short: "Cover arranged before you travel, so you can go with peace of mind.",
@@ -72,6 +80,9 @@ export const SERVICES = [
   },
   {
     id: "hotel-booking",
+    image: pexels(36134151, ...PHOTO_SIZES.service),
+    shortTitle: "Hotels",
+    quick: { placeField: "destination", placeLabel: "City or area", placePlaceholder: "e.g. Mangochi", dateField: "checkIn", dateLabel: "Check-in" },
     title: "Hotel booking",
     icon: "bed",
     short: "Hotels, lodges and guesthouses for every budget.",
@@ -91,6 +102,9 @@ export const SERVICES = [
   },
   {
     id: "tour-packages",
+    image: pexels(33498304, ...PHOTO_SIZES.service),
+    shortTitle: "Tours",
+    quick: { placeField: "destination", placeLabel: "Where or what?", placePlaceholder: "e.g. Zanzibar, safari", dateField: "startDate", dateLabel: "Start date" },
     title: "Tour packages",
     icon: "compass",
     short: "Trips put together for you — safaris, beaches, cities and more.",
@@ -110,6 +124,9 @@ export const SERVICES = [
   },
   {
     id: "airport-transfers",
+    image: pexels(1815385, ...PHOTO_SIZES.service),
+    shortTitle: "Transfers",
+    quick: { placeField: "airport", placeLabel: "Airport", placePlaceholder: "e.g. Kamuzu International", dateField: "date", dateLabel: "Date" },
     title: "Airport transfers",
     icon: "car",
     short: "A ride waiting for you when you land — or to get you to your flight.",
@@ -131,6 +148,9 @@ export const SERVICES = [
   },
   {
     id: "visa-processing",
+    image: pexels(30754172, ...PHOTO_SIZES.service),
+    shortTitle: "Visas",
+    quick: { placeField: "country", placeLabel: "Visa for (country)", placePlaceholder: "e.g. United Arab Emirates", dateField: "travelDate", dateLabel: "Travel date" },
     title: "Visa processing",
     icon: "visa",
     short: "Help with visa applications, from requirements to submission.",
@@ -151,16 +171,39 @@ export const SERVICES = [
   },
 ];
 
-export const DESTINATION_SUGGESTIONS = [
-  "Johannesburg",
-  "Nairobi",
-  "Dubai",
-  "Lusaka",
-  "Dar es Salaam",
-  "Zanzibar",
-  "Addis Ababa",
-  "London",
+// Destination cards. `kind` + `colors` only draw the fallback illustration if the photo cannot load.
+// image: any URL or /images/... path. Photographers are credited in the README.
+const dest = (id) => pexels(id, ...PHOTO_SIZES.destination);
+export const DESTINATIONS = [
+  { city: "Johannesburg", code: "JNB", country: "South Africa", kind: "skyline", colors: ["#0a3d3a", "#f7df3a"], image: dest(33622126) },
+  { city: "Nairobi", code: "NBO", country: "Kenya", kind: "skyline", colors: ["#073d22", "#8fdc4a"], image: dest(29069329) },
+  { city: "Dubai", code: "DXB", country: "United Arab Emirates", kind: "spire", colors: ["#0c6f86", "#fbea6a"], image: dest(19180974) },
+  { city: "Cape Town", code: "CPT", country: "South Africa", kind: "mountain", colors: ["#0b6b36", "#f2d40f"], image: dest(14081797) },
+  { city: "Durban", code: "DUR", country: "South Africa", kind: "beach", colors: ["#1aa6b7", "#fbea6a"], image: dest(4606404) },
+  { city: "Mombasa", code: "MBA", country: "Kenya", kind: "beach", colors: ["#0c6f86", "#b6e84a"], image: dest(37489740) },
+  { city: "Abu Dhabi", code: "AUH", country: "United Arab Emirates", kind: "skyline", colors: ["#0a5530", "#6fd498"], image: dest(28448972) },
+  { city: "London", code: "LHR", country: "United Kingdom", kind: "clock", colors: ["#243a30", "#6fd498"], image: dest(30029654) },
 ];
+
+export const HERO_IMAGE = pexels(18813721, ...PHOTO_SIZES.hero); // aircraft wing above the clouds
+
+// Starting points for flight requests (no prices — every quote comes by email).
+export const ROUTES = [
+  { from: "Lilongwe", fromCode: "LLW", to: "Johannesburg", toCode: "JNB" },
+  { from: "Lilongwe", fromCode: "LLW", to: "Nairobi", toCode: "NBO" },
+  { from: "Lilongwe", fromCode: "LLW", to: "Dubai", toCode: "DXB" },
+  { from: "Blantyre", fromCode: "BLZ", to: "Johannesburg", toCode: "JNB" },
+  { from: "Lilongwe", fromCode: "LLW", to: "Addis Ababa", toCode: "ADD" },
+  { from: "Lilongwe", fromCode: "LLW", to: "Lusaka", toCode: "LUN" },
+];
+
+export const WHY = [
+  { icon: "compass", title: "One team, six services", text: "Flights, hotels, transfers, tours, insurance and visas, handled together." },
+  { icon: "mail", title: "Booking by email", text: "Send a short request and we reply with availability and the price. No account needed." },
+  { icon: "shield", title: "Pay after we confirm", text: "There is no online payment. We confirm the details first, then tell you how to pay." },
+];
+
+export const TRUST = ["No account needed", "Payment arranged by email", "Pilot phase — your feedback helps"];
 
 export const STEPS = [
   { title: "Choose a service", text: "Flights, insurance, hotels, tours, transfers or visas — pick what you need." },

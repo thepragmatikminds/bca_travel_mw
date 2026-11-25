@@ -61,7 +61,8 @@ npm run build     # outputs ./dist
 | Destination quick-picks, FAQ, "how it works" steps | `src/config/site.js` |
 | Brand colours and fonts | `src/index.css` (`@theme`) |
 | Logo | `src/components/Logo.jsx`, `public/favicon.svg`, `public/icons/` |
-| Poster image on the home page | `public/images/bca-poster.jpg` |
+| Photos (hero, destinations, services) | `image:` fields in `src/config/site.js` — see `public/images/README.txt` |
+| Install-app banner timing / wording | `src/components/InstallPrompt.jsx`, `src/lib/install.js` |
 
 **Going live later:** set `SITE.pilot.enabled` to `false` to hide the pilot banner and footer note.
 
@@ -73,9 +74,22 @@ wrangler.jsonc        Cloudflare config (static assets + single-page-app fallbac
 public/               icons, manifest (installable app), service worker, _headers
 src/config/site.js    business details, services, form fields, FAQ
 src/lib/              email builder + validation, tiny router, date helpers
-src/components/       header, footer, cards, icons, logo
+src/components/       header, footer, cards, hero, install prompt, illustrations (Scenes.jsx), icons, logo
 src/pages/            Home, Services, Book, Contact, NotFound
 ```
+
+## Look and feel
+
+Editorial style: serif headlines (Fraunces), warm paper background, big photo cards, floating booking card on the hero,
+dark-green feature panel. Colours come from the poster and blend in gradients (deep green → brand green → lake teal → sun yellow).
+Photos come from Pexels and load straight from their servers. If one fails to load, that slot shows a built-in illustration, so the site never has a gap.
+
+## Install prompt ("Add to Home Screen")
+
+A banner slides up 5 seconds after the page opens when the site can be installed and isn't already:
+Chrome/Edge/Android get a one-tap **Install app** button; iPhone/iPad get the Share → Add to Home Screen steps.
+Browsers do not allow a site to force the install dialog, so the visitor always taps once. If dismissed it stays away for 7 days.
+It never appears on the booking page.
 
 ## Notes
 
@@ -83,3 +97,27 @@ src/pages/            Home, Services, Book, Contact, NotFound
 - **WhatsApp** links (questions only) use the two poster numbers, because the poster shows a WhatsApp icon beside them. Set `whatsappEnabled: false` in `site.js` to hide them.
 - Do not collect passport numbers through the site — the visa form says so. The team should explain safe document sharing in the email reply.
 - The old Base44 version (airline bookings, Stripe, accounts) is no longer used by this code and can stay archived.
+
+## Photo credits (Pexels)
+
+Pexels photos are free for commercial use with no attribution required; credits are listed as a courtesy.
+
+| Where | Pexels photo | Photographer |
+| --- | --- | --- |
+| Hero | 18813721 | Pexels contributor |
+| Johannesburg | 33622126 | Kelly |
+| Nairobi | 29069329 | Ken Mwaura |
+| Dubai | 19180974 | Athul Shigo |
+| Cape Town | 14081797 | Gavin Rain |
+| Durban | 4606404 | Ojas Narappanawar |
+| Mombasa | 37489740 | Zebari Visuals |
+| Abu Dhabi | 28448972 | Sergey Guk |
+| London | 30029654 | Jabez Cutamora |
+| Air tickets | 1815396 | Pexels contributor |
+| Travel insurance | 1476356 | Ian Vedette Kafuna |
+| Hotel booking | 36134151 | Vika Glitter |
+| Tour packages | 33498304 | Jos van Ouwerkerk |
+| Airport transfers | 1815385 | Pexels contributor |
+| Visa processing | 30754172 | Jabez Cutamora |
+
+View any photo at `https://www.pexels.com/photo/<number>/`.

@@ -1,71 +1,62 @@
 import { Link } from "@/lib/router";
 import Logo from "@/components/Logo";
 import InstallAppButton from "@/components/InstallAppButton";
-import { InstagramIcon, MailIcon, PhoneIcon } from "@/components/Icons";
 import { SERVICES, SITE } from "@/config/site";
+
+const Group = ({ title, children }) => (
+  <div>
+    <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-ink-500">{title}</h4>
+    <ul className="mt-4 space-y-3 text-[15px] text-ink-700">{children}</ul>
+  </div>
+);
 
 export default function SiteFooter() {
   return (
-    <footer className="on-dark mt-24 bg-ink-900 text-white">
+    <footer className="mt-24 bg-[linear-gradient(180deg,#eef3e7,#e3eddc)] pb-24 md:pb-0">
       <div className="flag-stripe" />
-      <div className="container-page grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1.2fr]">
+      <div className="container-page grid gap-10 py-14 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
         <div>
-          <Logo light />
-          <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/70">
-            {SITE.tagline}. One team for your flights, stays, transfers, tours, insurance and visas.
+          <Logo />
+          <p className="mt-4 max-w-xs text-[15px] leading-relaxed text-ink-600">
+            {SITE.tagline}. Flights, stays, transfers, tours, insurance and visas — confirmed by email.
           </p>
-          <InstallAppButton className="mt-5" />
+          <p className="mt-3 text-[13px] text-ink-500">Serving travellers in Malawi.</p>
+          <InstallAppButton className="mt-5 [&_button]:!border-brand-700/30 [&_button]:!text-brand-800 [&_p]:!text-ink-500" />
         </div>
 
-        <div>
-          <h4 className="text-xs font-extrabold uppercase tracking-[0.18em] text-sun-400">Our services</h4>
-          <ul className="mt-4 space-y-2.5">
-            {SERVICES.map((s) => (
-              <li key={s.id}>
-                <Link to={`/book?service=${s.id}`} className="text-sm text-white/75 transition-colors hover:text-white">
-                  {s.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <Group title="Our services">
+          {SERVICES.map((s) => (
+            <li key={s.id}>
+              <Link to={`/book?service=${s.id}`} className="hover:text-brand-700">
+                {s.title}
+              </Link>
+            </li>
+          ))}
+        </Group>
 
-        <div>
-          <h4 className="text-xs font-extrabold uppercase tracking-[0.18em] text-sun-400">For booking</h4>
-          <ul className="mt-4 space-y-3 text-sm">
-            <li>
-              <a href={`mailto:${SITE.email}`} className="inline-flex items-center gap-2.5 text-white/85 hover:text-white">
-                <MailIcon size={16} /> {SITE.email}
-              </a>
-            </li>
-            {SITE.phones.map((p) => (
-              <li key={p.tel}>
-                <a href={`tel:${p.tel}`} className="inline-flex items-center gap-2.5 text-white/85 hover:text-white">
-                  <PhoneIcon size={16} /> {p.display}
-                </a>
-              </li>
-            ))}
-            <li>
-              <a
-                href={SITE.instagram.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 text-white/85 hover:text-white"
-              >
-                <InstagramIcon size={16} /> @{SITE.instagram.handle}
-              </a>
-            </li>
-          </ul>
-          <p className="mt-5 text-xs leading-relaxed text-white/55">
-            Payment is arranged by email after we confirm your request.
-          </p>
-        </div>
+        <Group title="Contact">
+          <li><a href={`mailto:${SITE.email}`} className="break-all hover:text-brand-700">{SITE.email}</a></li>
+          {SITE.phones.map((p) => (
+            <li key={p.tel}><a href={`tel:${p.tel}`} className="hover:text-brand-700">{p.display}</a></li>
+          ))}
+          <li>
+            <a href={SITE.instagram.url} target="_blank" rel="noopener noreferrer" className="hover:text-brand-700">
+              Instagram @{SITE.instagram.handle}
+            </a>
+          </li>
+        </Group>
+
+        <Group title="Good to know">
+          <li>Requests confirmed by email</li>
+          <li>Payment arranged by email</li>
+          <li>No account needed</li>
+        </Group>
       </div>
 
-      <div className="border-t border-white/10">
-        <div className="container-page flex flex-col gap-2 py-6 text-xs text-white/55 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} BCA Travel, Malawi.</p>
-          {SITE.pilot.enabled && <p>Pilot phase — prices, availability and bookings are confirmed by email.</p>}
+      <div className="border-t border-ink-900/10">
+        <div className="container-page flex flex-col gap-1.5 py-6 text-xs leading-relaxed text-ink-500 sm:flex-row sm:justify-between">
+          <p>© {new Date().getFullYear()} BCA Travel. Prices and availability are confirmed by email. Photos via Pexels.</p>
+          {SITE.pilot.enabled && <p>Pilot phase — thank you for helping us improve.</p>}
         </div>
       </div>
     </footer>
